@@ -3,6 +3,7 @@ Pagination
 
 A collection of pagination algorithms.
 
+
 Example
 =======
 

@@ -1,11 +1,11 @@
-Welcome to Pagination's documentation!
-======================================
+Pagination Documentation
+========================
 
 
 Overview
 --------
 
-A really useful Python project.
+A collection of pagination algorithms.
 
 
 
