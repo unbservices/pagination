@@ -41,7 +41,7 @@ If you have any problems with this software, please take a moment to report
 them at https://github.com/unbservices/pagination/issues/ or  by email to
 nick@unb.services.
 
-If you are a security researcher or believe you have found a security
+If you are a security researcher and/or believe you have found a security
 vulnerability in this software, please contact us by email at
 nick@unb.services.
 
