@@ -30,7 +30,8 @@ Example
 Documentation
 =============
 
-Documentation for Pagination can be found in the ``/docs`` directory.
+Pagination docs are `available on ReadTheDocs
+<http://pagination.readthedocs.org/>`_, or in the ``/docs`` directory.
 
 
 Issue Reporting and Contact Information
