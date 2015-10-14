@@ -7,14 +7,14 @@ A collection of pagination algorithms.
 Example
 =======
 
-.. testcode::
+.. code-block:: python
 
    from pagination.fixed import pagify, ascii_format
 
    for i in range(0, 9):
      print ascii_format(pagify(i, 9))
 
-.. testoutput::
+::
 
    < * 0 *  1    2    3    4   ...   8   >
    <   0  * 1 *  2    3    4   ...   8   >
