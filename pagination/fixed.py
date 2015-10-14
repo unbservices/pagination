@@ -26,8 +26,8 @@ Example
 # TODO(nick): Allow both 0 and 1 based indexing.
 # TODO(nick): Allow an offset? e.g., pages 30-90.
 
-def pagify_fixed_width(page, pages, left_pages=1, right_pages=1, begin_pages=1,
-                       end_pages=1, include_ellipses=True):
+def pagify(page, pages, left_pages=1, right_pages=1, begin_pages=1,
+           end_pages=1, include_ellipses=True):
   """Return a list of page segments useful for displaying paginated navigation.
 
   Args
@@ -56,6 +56,27 @@ def pagify_fixed_width(page, pages, left_pages=1, right_pages=1, begin_pages=1,
       The number of pages to include at the end of the pagination list (after
       the ellipses, if they are present).
 
+  Example
+  -------
+
+  .. testcode::
+
+     from pagination.fixed import pagify, ascii_format
+
+     for i in range(0, 9):
+       print pagify(i, 9)
+
+  .. testoutput::
+
+    [[], [], 0, [1, 2, 3, 4], ['...', 8]]
+    [[], [0], 1, [2, 3, 4], ['...', 8]]
+    [[], [0, 1], 2, [3, 4], ['...', 8]]
+    [[], [0, 1, 2], 3, [4], ['...', 8]]
+    [[0, '...'], [3], 4, [5], ['...', 8]]
+    [[0, '...'], [4], 5, [6, 7, 8], []]
+    [[0, '...'], [4, 5], 6, [7, 8], []]
+    [[0, '...'], [4, 5, 6], 7, [8], []]
+    [[0, '...'], [4, 5, 6, 7], 8, [], []]
 
   Returns
   -------
@@ -105,38 +126,76 @@ def pagify_fixed_width(page, pages, left_pages=1, right_pages=1, begin_pages=1,
   return [start, toleft, page, toright, end]
 
 
+def _fmt(i):
+  return str(i).rjust(2, ' ').ljust(3, ' ')
+
+
+def _page_range_to_string(page_range):
+  if isinstance(page_range, int):
+    return "*%s*" % _fmt(page_range)
+  s = ""
+  for p in page_range:
+    if p == '...':
+      s += ' ... '
+    else:
+      s += " %s " % _fmt(p)
+  return s
+
+
+def ascii_format(pagified):
+  """Format the result of pagify as an ASCII string.
+
+  Args
+  ----
+  pagified : list
+      The output of the pagify function.
+
+  Example
+  -------
+
+  .. testcode::
+
+     from pagination.fixed import pagify, ascii_format
+
+     for i in range(0, 9):
+       print ascii_format(pagify(i, 9))
+
+  .. testoutput::
+
+    < * 0 *  1    2    3    4   ...   8   >
+    <   0  * 1 *  2    3    4   ...   8   >
+    <   0    1  * 2 *  3    4   ...   8   >
+    <   0    1    2  * 3 *  4   ...   8   >
+    <   0   ...   3  * 4 *  5   ...   8   >
+    <   0   ...   4  * 5 *  6    7    8   >
+    <   0   ...   4    5  * 6 *  7    8   >
+    <   0   ...   4    5    6  * 7 *  8   >
+    <   0   ...   4    5    6    7  * 8 * >
+
+  Returns
+  -------
+  str
+      An ASCII formatted pagination string.
+  """
+  s = ''.join([_page_range_to_string(s) for s in pagified])
+  return '< ' + s + ' >'
+
+
 if __name__ == '__main__':
 
   # TODO(nick): The below is primarily for doing a quick visual/manual "test"
   #   of this algorithm.  This would obviously be better if automated.
 
-  # TODO(nick): We can add various "output formatters" to this, one of which
-  #   could be an ASCII formatter like the code below.
-
-  def fmt(i):
-    return str(i).rjust(2, ' ').ljust(3, ' ')
-
-  def page_range_to_string(page_range):
-    if isinstance(page_range, int):
-      return "*%s*" % fmt(page_range)
-    s = ""
-    for p in page_range:
-      if p == '...':
-        s += ' ... '
-      else:
-        s += " %s " % fmt(p)
-    return s
-
   print '\n'
 
-  pages = 20
+  pages = 9
   left = 1
   right = 1
   start = 1
   end = 1
   include_ellipses = True
 
-  pretty_print = False
+  # pretty_print = False
   pretty_print = True
 
   for i in range(0, pages):
@@ -148,10 +207,8 @@ if __name__ == '__main__':
                       end_pages=end,
                       include_ellipses=include_ellipses)
     if pretty_print:
-      s = ""
-      strings = [page_range_to_string(r) for r in pagified]
-      print 'pagify(%s, %s): ' % (fmt(i), pages), ''.join(strings)
+      print 'pagify(%s, %s): ' % (_fmt(i), pages), ascii_format(pagified)
     else:
-      print 'pagify(%s, %s): ' % (fmt(i), pages), pagified
+      print 'pagify(%s, %s): ' % (_fmt(i), pages), pagified
 
   print '\n'

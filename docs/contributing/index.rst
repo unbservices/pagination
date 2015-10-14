@@ -1,13 +1,9 @@
 Contributing
 ============
 
-Add a quick overview about how to get started contributing to this project.
-
 
 Development Tools
 -----------------
-
-Introduce any development tools a contributer might need to get started.
 
 Pagination uses
 `unb-cli <https://bitbucket.org/unbsolutions/unb-cli>`_ to simplify
@@ -33,7 +29,13 @@ You can clone the repo with the following command.
 How to setup a development environment
 --------------------------------------
 
-Pending...
+You'll need:
+
+- git
+- Python 2.7
+- pip
+- virtualenv
+- unb-cli
 
 
 How to build the project

@@ -1,7 +1,29 @@
 Pagination
 ==========
 
-A really useful Python project.
+A collection of pagination algorithms.
+
+Example
+=======
+
+.. testcode::
+
+   from pagination.fixed import pagify, ascii_format
+
+   for i in range(0, 9):
+     print ascii_format(pagify(i, 9))
+
+.. testoutput::
+
+   < * 0 *  1    2    3    4   ...   8   >
+   <   0  * 1 *  2    3    4   ...   8   >
+   <   0    1  * 2 *  3    4   ...   8   >
+   <   0    1    2  * 3 *  4   ...   8   >
+   <   0   ...   3  * 4 *  5   ...   8   >
+   <   0   ...   4  * 5 *  6    7    8   >
+   <   0   ...   4    5  * 6 *  7    8   >
+   <   0   ...   4    5    6  * 7 *  8   >
+   <   0   ...   4    5    6    7  * 8 * >
 
 
 Documentation
